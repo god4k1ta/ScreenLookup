@@ -7,19 +7,20 @@ class CursorCapture:
         self.screen_capture = ScreenCapture()
         self.mouse = Mouse()
 
-    def capture_around_cursor(
-        self,
-        width: int = 500,
-        height: int = 300
-    ):
+    def capture_around_cursor(self, width: int = 500, height: int = 300):
         x, y = self.mouse.get_position()
 
         left = x - width // 2
         top = y - height // 2
 
-        return self.screen_capture.capture_region(
+        image = self.screen_capture.capture_region(
             left,
             top,
             width,
             height
         )
+
+        cursor_x = x - left
+        cursor_y = y - top
+
+        return image, cursor_x, cursor_y
