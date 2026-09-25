@@ -2,18 +2,17 @@ from dataclasses import dataclass
 
 
 @dataclass
-class OCRWord:
+class OCRToken:
     text: str
     x: int
     y: int
     width: int
     height: int
-    confidence: float
 
 
 @dataclass
 class OCRResult:
-    words: list[OCRWord]
+    tokens: list[OCRToken]
     full_text: str
     language: str | None = None
 
