@@ -4,8 +4,13 @@ from core.models import OCRToken, OCRResult
 
 class OCRService:
     def __init__(self):
-        self.ocr = PaddleOCR( lang="en",return_word_box=True)
-
+        self.ocr = PaddleOCR(
+            lang="en",
+            return_word_box=True,
+            use_doc_orientation_classify=False,
+            use_doc_unwarping=False,
+            use_textline_orientation=False
+        )
     def recognize(self, image):
         img = np.array(image)
 
