@@ -1,4 +1,5 @@
 import time
+
 from PIL import ImageDraw
 
 from capture.cursor_capture import CursorCapture
@@ -11,17 +12,16 @@ ocr_service = OCRService()
 processor = TextProcessor()
 
 
-print("Move cursor to TALK. Starting in 3 seconds...")
-time.sleep(3)
+
 
 mouse_x, mouse_y = cursor_capture.mouse.get_position()
 print("ABSOLUTE MOUSE:", mouse_x, mouse_y)
+
 
 image, cursor_x, cursor_y = cursor_capture.capture_around_cursor()
 
 print("LOCAL CURSOR:", cursor_x, cursor_y)
 print("MOUSE AFTER CAPTURE:", cursor_capture.mouse.get_position())
-print("MSS MONITOR:", cursor_capture.screen_capture.sct.monitors[1])
 print("IMAGE SIZE:", image.size)
 
 
@@ -49,29 +49,31 @@ print("RESULTS:", len(results))
 
 result = results[0]
 
+
+# Выводим найденные OCR-токены
 for token in result.tokens:
     print(token)
 
 
+# Находим слово под курсором
 found = processor.find_token_under_cursor(
     result.tokens,
     cursor_x,
     cursor_y
 )
-same_line_tokens = processor.get_tokens_on_same_line(
+
+
+# Получаем контекст строки
+context = processor.get_context(
     result.tokens,
     found
 )
 
-print("SAME LINE:")
 
-for token in same_line_tokens:
-    print(token)
+# Получаем текст найденного слова
+word = processor.get_token_text(found)
+
 
 print("FOUND:", found)
-
-word = processor.get_token_text(found)
-context = processor.build_line_text(same_line_tokens)
-
 print("CONTEXT:", context)
 print("FOUND WORD:", word)
