@@ -1,7 +1,11 @@
-import requests
+from dictionary.api import lookup_word
 
-r=requests.get('https://api.datamuse.com/words?sp=talk&md=dpsrf&ipa=1&max=1')
-print(r.status_code)
-print(r.headers)
-print(r.text)
-print(r.json())
+
+data = lookup_word("present")
+
+assert isinstance(data, dict)
+assert data["found"] is True
+assert "entry" in data
+assert data["entry"]["word"] == "present"
+
+print("All dictionary API tests passed.")
