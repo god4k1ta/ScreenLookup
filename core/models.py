@@ -34,25 +34,32 @@ class LookupResult:
 
 @dataclass
 class Pronunciation:
-    text : str
-    audio : str
+    text: str
+    audio: str
 
 
 @dataclass
 class Phonetics:
-    uk : Pronunciation
-    us : Pronunciation
+    uk: Pronunciation
+    us: Pronunciation
 
 
 @dataclass
 class Definition:
     part_of_speech: str
-    definition : str
-    examples : list[str]
+    definition: str
+    examples: list[str]
 
 
 @dataclass
 class DictionaryEntry:
-    word : str
-    phonetics : Phonetics
-    definitions : list[Definition]
+    word: str
+    phonetics: Phonetics
+    definitions: list[Definition]
+
+
+@dataclass
+class TranslationResult:
+    source_text: str
+    translation: str
+    alternatives: list[str]
